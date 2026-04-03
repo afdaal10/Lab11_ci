@@ -4,7 +4,7 @@
 **NIM:** 312410445  
 **Kelas:** I241E 
 
-### Universitas Pelita Bangsa**
+### Universitas Pelita Bangsa
 
 ---
 
