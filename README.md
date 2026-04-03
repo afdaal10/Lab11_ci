@@ -207,7 +207,7 @@ Tombol Logout ditambahkan di navigasi halaman admin. Ketika diklik, sesi akan di
 ![Screenshot edit](dokumentasi_praktikum/admin_daftar_artikel.png)
 
 **Halaman Admin - Tambah Artikel**
-![Screenshot edit](dokumentasi_praktikum/tambah_artikel.png)
+![Screenshot edit](dokumentasi_praktikum/tambah_artikel1.png)
 
 **Halaman Admin - Edit Artikel**
 ![Screenshot edit](dokumentasi_praktikum/edit_artikel.png)
