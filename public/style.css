@@ -1,0 +1,139 @@
+/* Reset Dasar */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; background-color: #fff; color: #333; }
+#container { width: 960px; margin: 0 auto; border: 1px solid #ccc; }
+
+/* Header & Navigasi */
+header { padding: 40px 20px; background: #fff; color: #aaa; }
+nav { background: #1a73e8; }
+nav a { color: #fff; display: inline-block; padding: 12px 25px; text-decoration: none; font-weight: bold; }
+nav a.active { background: #1557b0; }
+
+/* Layout Utama */
+#wrapper { display: flex; padding: 20px; }
+#main { flex: 3; padding-right: 20px; }
+#sidebar { flex: 1; }
+
+/* PERBAIKAN FINAL JUDUL ARTIKEL (HITAM & TANPA GARIS BAWAH) */
+.entry { margin-bottom: 30px; }
+.entry h2 { margin-bottom: 10px; }
+
+.entry h2 a {
+    color: #000000 !important;       /* Memaksa warna hitam pekat */
+    text-decoration: none !important; /* Memaksa garis bawah hilang */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.entry h2 a:hover {
+    color: #1a73e8 !important;       /* Hanya biru saat disentuh kursor */
+}
+
+/* Gambar & Teks */
+.entry img { max-width: 200px; height: auto; display: block; margin-bottom: 10px; }
+.entry p { color: #444; line-height: 1.6; text-align: justify; }
+.divider { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+
+/* Sidebar Widget */
+.widget-box { margin-bottom: 20px; border: 1px solid #ccc; }
+.widget-box h3 { background: #1a73e8; color: #fff; padding: 10px; }
+footer { background: #222; color: #fff; padding: 15px; }
+/* TABLE ADMIN */
+table.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+table.table th, table.table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+}
+table.table thead {
+    background-color: #1557b0;
+    color: #fff;
+}
+.btn {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #1557b0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 13px;
+}
+.btn-danger {
+    background: #cc0000;
+} 
+/* ==========================================
+   ARTIKEL - PUBLIC
+   ========================================== */
+
+/* Judul artikel: hitam, tanpa underline */
+article.entry h2 a {
+    color: #000000 !important;
+    text-decoration: none !important;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+article.entry h2 a:hover {
+    color: #1a73e8 !important;
+}
+
+article.entry h2 {
+    margin-bottom: 10px;
+}
+
+/* Gambar artikel */
+article.entry img {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    background: #f0f0f0;
+    padding: 4px;
+}
+
+/* Isi artikel */
+article.entry p {
+    color: #444;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+/* Tombol baca selengkapnya */
+.btn-read {
+    display: inline-block;
+    padding: 5px 14px;
+    background: #1557b0;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.btn-read:hover {
+    background: #1a73e8;
+}
+
+/* Garis pemisah antar artikel */
+hr.divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+/* BACA SELENGKAPNYA */
+.btn-read {
+    display: inline-block;
+    margin-top: 8px;
+    color: #1557b0;
+    text-decoration: none;
+    font-size: 14px;
+}
+.btn-read:hover {
+    text-decoration: underline;
+}
