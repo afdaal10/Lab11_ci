@@ -193,62 +193,25 @@ Tombol Logout ditambahkan di navigasi halaman admin. Ketika diklik, sesi akan di
 
 ---
 
-### PHP Framework (CodeIgniter)
-
-**Tampilan Awal CodeIgniter 4**
-![Tampilan Awal CI4](screenshots/p1_tampilan_awal_ci4.png)
-
-**Aktivasi Mode Debugging**
-![Mode Debugging](screenshots/p1_mode_debugging.png)
-
-**Halaman About**
-![Halaman About](screenshots/p1_halaman_about.png)
-
-**Halaman Kontak**
-![Halaman Kontak](screenshots/p1_halaman_kontak.png)
-
 **Layout Sederhana dengan CSS**
-![Layout CSS](screenshots/p1_layout_css.png)
+![Screenshot edit](dokumentasi_praktikum/halaman_about.png)
 
----
-
-### Framework Lanjutan (CRUD)
 
 **Tampilan Daftar Artikel (Publik)**
-![Daftar Artikel](screenshots/p2_daftar_artikel.png)
+![Screenshot edit](dokumentasi_praktikum/daftar_artikel.png)
 
 **Tampilan Detail Artikel**
-![Detail Artikel](screenshots/p2_detail_artikel.png)
+![Screenshot edit](dokumentasi_praktikum/detail_artikel.png)
 
 **Halaman Admin - Daftar Artikel**
-![Admin Daftar Artikel](screenshots/p2_admin_index.png)
+![Screenshot edit](dokumentasi_praktikum/admin_daftar_artikel.png)
 
 **Halaman Admin - Tambah Artikel**
-![Tambah Artikel](screenshots/p2_tambah_artikel.png)
+![Screenshot edit](dokumentasi_praktikum/tambah_artikel.png)
 
 **Halaman Admin - Edit Artikel**
-![Edit Artikel](screenshots/p2_edit_artikel.png)
-
----
-
-### View Layout dan View Cell
-
-**Daftar Artikel dengan Layout Baru dan Widget Artikel Terkini**
-![Artikel dengan View Cell](screenshots/p3_artikel_view_cell.png)
-
-**Tampilan Detail Artikel dengan Layout Baru**
-![Detail Artikel Layout Baru](screenshots/p3_detail_artikel.png)
-
-**Halaman About dengan Layout Baru**
-![About Layout Baru](screenshots/p3_about.png)
-
-**Halaman Kontak dengan Layout Baru**
-![Kontak Layout Baru](screenshots/p3_kontak.png)
-
----
-
-### Framework Lanjutan (Modul Login)
+![Screenshot edit](dokumentasi_praktikum/edit_artikel.png)
 
 **Halaman Login**
-![Halaman Login](screenshots/p4_halaman_login.png)
+![Screenshot edit](dokumentasi_praktikum/halaman_login.png)
 
