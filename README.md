@@ -284,3 +284,26 @@ Gambar ditampilkan di halaman daftar artikel publik dan halaman detail artikel m
 **Halaman Login**
 ![Screenshot edit](dokumentasi_praktikum/halaman_login.png)
 
+**Halaman Fitur Pencarian**
+![Screenshot edit](dokumentasi_praktikum/fitur_pencarian.png)
+
+**Halaman Fitur Pagination**
+![Screenshot edit](dokumentasi_praktikum/pagination.png)
+
+**Halaman Kategori**
+![Screenshot edit](dokumentasi_praktikum/kategori.png)
+
+**Halaman Upload Gambar**
+![Screenshot edit](dokumentasi_praktikum/upload_gambar.png)
+
+**Halaman Daftar Artikel New**
+![Screenshot edit](dokumentasi_praktikum/output_praktikum.png)
+
+
+
+
+
+
+
+
+
