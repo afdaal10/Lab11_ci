@@ -189,6 +189,75 @@ Tombol Logout ditambahkan di navigasi halaman admin. Ketika diklik, sesi akan di
 
 ---
 
+## Praktikum 5: Pagination dan Pencarian
+
+### Tujuan
+Memahami konsep dasar Pagination dan Pencarian data, serta mengimplementasikannya menggunakan Framework CodeIgniter 4.
+
+### Pagination
+Pagination adalah fitur yang digunakan untuk membatasi tampilan data yang banyak dengan memecahnya menjadi beberapa halaman. CodeIgniter 4 sudah menyediakan library pagination bawaan sehingga implementasinya cukup mudah tanpa perlu membuat logika pagination secara manual.
+
+Method `admin_index()` pada Controller Artikel dimodifikasi dengan menggunakan method `paginate(5)` yang artinya setiap halaman hanya menampilkan 5 data artikel. Objek pager juga dikirimkan ke view melalui `$model->pager` untuk menampilkan navigasi halaman di bagian bawah tabel.
+
+### Pencarian Data
+Fitur pencarian diimplementasikan dengan memanfaatkan query parameter dari URL. Controller menerima keyword pencarian melalui `$this->request->getVar('q')` kemudian memfilter data menggunakan method `like('judul', $q)` yang akan mencari artikel berdasarkan judul yang mengandung kata kunci tersebut.
+
+Pagination dan pencarian dikombinasikan sehingga ketika pengguna mencari data dan hasilnya lebih dari 5, navigasi halaman tetap berfungsi dengan mempertahankan keyword pencarian melalui `$pager->only(['q'])->links()`. Dengan cara ini keyword tidak hilang ketika pengguna berpindah halaman.
+
+### Form Pencarian
+Form pencarian ditambahkan di bagian atas tabel admin dengan method GET sehingga keyword pencarian terlihat di URL dan dapat dibagikan. Selain pencarian berdasarkan judul, dropdown filter kategori juga ditambahkan untuk memfilter artikel berdasarkan kategori tertentu secara bersamaan dengan keyword pencarian.
+
+---
+
+## Praktikum 6: Relasi Tabel dan Query Builder
+
+### Tujuan
+Memahami konsep relasi antar tabel dalam database, mengimplementasikan relasi One-to-Many, melakukan query join tabel menggunakan Query Builder, dan menampilkan data dari tabel yang berelasi.
+
+### Membuat Tabel Kategori
+Tabel kategori dibuat dengan field id_kategori sebagai primary key, nama_kategori, dan slug_kategori. Tabel ini akan berelasi dengan tabel artikel menggunakan tipe relasi One-to-Many, artinya satu kategori dapat memiliki banyak artikel namun setiap artikel hanya memiliki satu kategori.
+
+### Relasi Tabel
+Foreign key `id_kategori` ditambahkan ke tabel artikel menggunakan perintah ALTER TABLE dengan constraint `fk_kategori_artikel`. Dengan adanya foreign key ini setiap artikel merujuk ke kategori yang valid di tabel kategori sehingga integritas data terjaga dan tidak ada artikel yang merujuk ke kategori yang tidak ada.
+
+### KategoriModel
+Model baru dibuat di `app/Models/KategoriModel.php` untuk mengelola data kategori. Model ini mendefinisikan tabel yang digunakan, primary key, dan field yang diizinkan untuk diisi melalui properti allowedFields.
+
+### Modifikasi ArtikelModel
+ArtikelModel dimodifikasi dengan menambahkan method `getArtikelDenganKategori()` yang menggunakan Query Builder untuk melakukan join antara tabel artikel dan tabel kategori. Method ini mengambil semua data artikel beserta nama kategorinya dalam satu query menggunakan LEFT JOIN sehingga artikel yang belum memiliki kategori tetap ditampilkan dengan nilai null pada kolom kategori.
+
+### Query Builder
+Query Builder adalah fitur CodeIgniter 4 yang memungkinkan pembuatan query database secara dinamis tanpa menulis SQL mentah. Pada praktikum ini Query Builder digunakan untuk melakukan join tabel dengan method `join()`, filter pencarian dengan method `like()`, filter kategori dengan method `where()`, dan pagination dengan method `paginate()`. Penggunaan Query Builder membuat kode lebih bersih, aman dari SQL injection, dan mudah dipelihara.
+
+### Modifikasi Controller dan View
+Controller Artikel diperbarui untuk menggunakan KategoriModel dan menampilkan data relasi antara artikel dan kategori. Semua view yang menampilkan artikel diperbarui untuk menampilkan nama kategori di samping judul artikel. Form tambah dan edit artikel dilengkapi dengan dropdown pilihan kategori yang datanya diambil secara dinamis dari database menggunakan `findAll()`.
+
+---
+
+## Praktikum 7: Upload File Gambar
+
+### Tujuan
+Memahami konsep dasar File Upload dan mengimplementasikan fitur upload gambar pada artikel menggunakan Framework CodeIgniter 4.
+
+### Konsep Upload File
+Upload file adalah proses mengirimkan file dari komputer pengguna ke server. Dalam CodeIgniter 4 fitur upload file sudah tersedia melalui class `UploadedFile` yang dapat diakses melalui `$this->request->getFile('nama_input')`. Class ini menyediakan berbagai method untuk memvalidasi dan memproses file yang diupload.
+
+### Implementasi Upload Gambar
+Method `add()` pada Controller Artikel dimodifikasi untuk menangani upload file gambar. Proses upload dilakukan dengan mengambil file yang diupload melalui `$this->request->getFile('gambar')`, memvalidasi file dengan mengecek `isValid()` dan `hasMoved()` untuk memastikan file valid dan belum dipindahkan sebelumnya, kemudian memindahkan file ke folder `public/gambar` menggunakan method `move()`, dan terakhir menyimpan nama file ke kolom gambar di database menggunakan `$file->getName()`.
+
+### Folder Penyimpanan
+File gambar disimpan di direktori `public/gambar` agar dapat diakses langsung melalui browser tanpa perlu routing tambahan. Folder ini dibuat secara manual di dalam direktori public project CodeIgniter 4. Pemilihan lokasi ini penting karena folder public adalah satu-satunya folder yang dapat diakses langsung oleh pengguna melalui browser.
+
+### Form Upload
+Form tambah artikel diperbarui dengan dua perubahan utama yaitu penambahan atribut `enctype="multipart/form-data"` pada tag form yang wajib ada agar browser dapat mengirimkan file bersama data form lainnya, dan penambahan input `type="file"` dengan atribut `accept="image/*"` agar hanya file gambar yang dapat dipilih oleh pengguna.
+
+### Fitur Ganti Gambar pada Edit
+Method `edit()` juga diperbarui untuk mendukung penggantian gambar saat mengedit artikel. Jika pengguna tidak memilih file baru saat mengedit artikel maka sistem akan tetap menggunakan gambar lama yang sudah tersimpan di database. Jika pengguna memilih file baru maka gambar lama akan digantikan dengan yang baru. Di halaman form edit juga ditampilkan preview gambar yang sedang digunakan saat ini sehingga pengguna dapat melihat gambar sebelum memutuskan untuk menggantinya.
+
+### Menampilkan Gambar
+Gambar ditampilkan di halaman daftar artikel publik dan halaman detail artikel menggunakan tag `img` dengan `base_url('/gambar/' . $row['gambar'])`. Pengecekan `!empty($row['gambar'])` selalu dilakukan sebelum menampilkan tag img untuk menghindari broken image apabila artikel belum memiliki gambar yang diupload.
+---
+
 ## Screenshot Hasil Praktikum
 
 ---
