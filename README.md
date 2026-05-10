@@ -256,7 +256,39 @@ Method `edit()` juga diperbarui untuk mendukung penggantian gambar saat mengedit
 
 ### Menampilkan Gambar
 Gambar ditampilkan di halaman daftar artikel publik dan halaman detail artikel menggunakan tag `img` dengan `base_url('/gambar/' . $row['gambar'])`. Pengecekan `!empty($row['gambar'])` selalu dilakukan sebelum menampilkan tag img untuk menghindari broken image apabila artikel belum memiliki gambar yang diupload.
+
 ---
+
+## Praktikum 8: Implementasi AJAX pada CodeIgniter 4
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini bertujuan untuk merombak cara aplikasi berinteraksi dengan server menggunakan teknologi **AJAX** (*Asynchronous JavaScript and XML*). Pada praktikum sebelumnya, setiap operasi (Tambah, Ubah, Hapus) mengharuskan browser untuk memuat ulang (*reload*) seluruh halaman secara penuh. Dengan menerapkan AJAX, aplikasi dapat mengirim dan menerima data dari server di latar belakang. Hasilnya, antarmuka web—seperti tabel daftar artikel—dapat diperbarui secara seketika (*real-time*) tanpa perlu *loading* halaman. Hal ini membuat aplikasi terasa jauh lebih cepat, dinamis, dan meningkatkan *User Experience* (UX) secara signifikan.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Persiapan Pustaka (Library) jQuery
+Langkah paling awal adalah menyiapkan "mesin" pendorong AJAX, yaitu library **jQuery**. jQuery digunakan karena menyederhanakan penulisan kode JavaScript murni menjadi lebih ringkas dan mudah dibaca, khususnya untuk pemanggilan fungsi AJAX. File *compressed* jQuery (misalnya `jquery-3.6.0.min.js` atau versi terbarunya) diunduh dan ditempatkan pada direktori `public/assets/js/` agar bisa dipanggil secara lokal di dalam file View.
+
+### 2. Pembuatan Backend (AjaxController)
+Pada sisi server (*backend*), dibuat sebuah controller baru bernama `AjaxController.php`. Perbedaan mencolok dari controller ini dibandingkan controller standar adalah format data yang dikembalikan. 
+Jika controller biasa mengembalikan kerangka halaman HTML utuh menggunakan fungsi `view()`, fungsi-fungsi manipulasi data di `AjaxController` (seperti `getData`, `getDetail`, `save`, dan `delete`) diinstruksikan untuk mengembalikan data mentah dalam format **JSON** menggunakan perintah `return $this->response->setJSON()`. Format JSON ini ibarat bahasa universal yang sangat mudah diproses oleh JavaScript di sisi *client* (browser).
+
+### 3. Modifikasi Tampilan Frontend (View AJAX)
+Pada sisi *client*, antarmuka (UI) dibangun pada file `app/Views/ajax/index.php`. Disini terjadi pergeseran tanggung jawab. Pada metode tradisional, tag `<tbody>` pada tabel diisi langsung oleh kode PHP (menggunakan perulangan `foreach`). Namun pada implementasi AJAX, tag `<tbody>` dibiarkan kosong. Tugas untuk "menggambar" isi tabel diserahkan sepenuhnya kepada JavaScript setelah menerima data JSON dari server.
+
+### 4. Implementasi Siklus CRUD Asynchronous
+Seluruh operasi *Create, Read, Update,* dan *Delete* (CRUD) dijalankan melalui perintah JavaScript tanpa perpindahan rute URL di browser:
+
+* **Read (Menampilkan Data):** Dibuat fungsi JavaScript bernama `loadData()`. Fungsi ini melakukan *request* GET ke alamat URL `ajax/getData`. Setelah menerima respon berupa deretan data JSON dari server, JavaScript melakukan perulangan (looping) untuk membuat susunan tag HTML `<tr>` dan `<td>`, lalu merangkai dan menyuntikkannya ke dalam tabel HTML yang kosong tadi.
+* **Create & Update (Tambah dan Ubah Data Terintegrasi):** Sebuah form tunggal dibuat untuk menangani penambahan sekaligus pengeditan data. 
+    * Saat tombol **"Edit"** di tabel diklik, AJAX akan meminta spesifik data artikel tersebut ke server (`getDetail`), lalu secara otomatis mengisi teks input di dalam form HTML.
+    * Saat form dikirim (*submit*), fungsi `e.preventDefault()` mencegah aksi *default browser* untuk *refresh* halaman. Seluruh isian form dibungkus dan dikirim ke method `save` di controller menggunakan metode POST. Sistem controller membedakan aksi dari nilai ID: Jika ID kosong, maka lakukan *Insert* (Tambah); jika ID terisi, maka lakukan proses *Update* (Ubah).
+
+* **Delete (Hapus Data):** Saat tombol **"Delete"** ditekan dan pengguna menyetujui *alert* konfirmasi, AJAX mengirimkan *request* penghapusan data berdasarkan ID ke server. 
+
+**Siklus Sinkronisasi Otomatis:**
+Rahasia dari aplikasi yang berjalan mulus tanpa *reload* ini adalah siklus pemanggilannya. Setiap kali proses penambahan, pengubahan, maupun penghapusan data berhasil direspon dengan status 'OK' oleh server, JavaScript secara otomatis akan memanggil ulang fungsi `loadData()`. Akibatnya, tabel langsung memperbarui tampilannya dalam sepersekian detik menyesuaikan data terbaru di *database*.
+
 
 ## Screenshot Hasil Praktikum
 
