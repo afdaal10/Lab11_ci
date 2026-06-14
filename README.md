@@ -338,7 +338,85 @@ Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja seca
 * Saat **berpindah halaman**, nilai pencarian, filter kategori, dan sorting tetap dipertahankan dalam URL sehingga konteks pencarian tidak hilang.
 * Saat **dropdown kategori atau sorting diubah**, `fetchData()` terpanggil otomatis tanpa perlu klik tombol Cari, memberikan respons yang lebih cepat dan intuitif bagi pengguna.
 
-## Screenshot Hasil Praktikum
+## Praktikum 10: Implementasi REST API dengan CodeIgniter 4
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini memperkenalkan konsep **REST API** (*Representational State Transfer Application Programming Interface*) menggunakan Framework CodeIgniter 4. Berbeda dengan praktikum sebelumnya yang membangun antarmuka berbasis HTML untuk pengguna manusia, REST API dirancang sebagai jembatan komunikasi antar aplikasi (*machine-to-machine*). API yang dibangun pada praktikum ini memungkinkan aplikasi lain — baik berbasis web, mobile, maupun desktop — untuk mengakses, menambah, mengubah, dan menghapus data artikel melalui protokol HTTP standar, tanpa perlu mengakses antarmuka web sama sekali. Data yang dipertukarkan menggunakan format **JSON** sebagai bahasa universal yang dapat dibaca oleh berbagai platform dan bahasa pemrograman.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Persiapan Tools: Instalasi Postman
+Sebelum membangun API, disiapkan terlebih dahulu alat untuk mengujinya, yaitu aplikasi **Postman**. Postman adalah aplikasi *REST Client* yang berfungsi untuk mensimulasikan *request* HTTP (GET, POST, PUT, DELETE) layaknya sebuah aplikasi yang mengonsumsi API. Dengan Postman, kita dapat menguji setiap *endpoint* API secara langsung dan melihat respons JSON yang dikembalikan oleh server tanpa perlu membangun antarmuka *frontend* terlebih dahulu.
+
+### 2. Pembuatan REST Controller (`Post.php`)
+Inti dari praktikum ini adalah pembuatan controller baru bernama `Post.php` di direktori `app/Controllers/`. Berbeda dari controller biasa yang meng-*extend* `BaseController`, controller ini meng-*extend* kelas **`ResourceController`** milik CodeIgniter dan menggunakan **`ResponseTrait`**. Kedua komponen ini memberikan kemampuan bawaan untuk mengembalikan respons dalam format JSON dengan kode status HTTP yang tepat dan sesuai standar REST.
+
+Controller ini memanfaatkan `ArtikelModel` yang sudah ada dan berisi 5 method utama:
+
+* **`index()`** — Menangani request `GET /post`. Mengambil seluruh data artikel dari database diurutkan dari yang terbaru, lalu mengembalikannya sebagai array JSON menggunakan `$this->respond($data)`.
+
+* **`show($id)`** — Menangani request `GET /post/{id}`. Mencari satu artikel berdasarkan ID yang diberikan. Jika ditemukan, data dikembalikan dalam format JSON. Jika tidak ditemukan, mengembalikan respons `404 Not Found` menggunakan `$this->failNotFound()`.
+
+* **`create()`** — Menangani request `POST /post`. Membaca data `judul` dan `isi` dari *body* request, lalu menyimpannya ke database. Jika berhasil, mengembalikan respons `201 Created` menggunakan `$this->respondCreated()` beserta pesan sukses dalam format JSON.
+
+* **`update($id)`** — Menangani request `PUT /post/{id}`. Membaca data baru dari *body* request dan memperbarui artikel dengan ID yang sesuai di database. Mengembalikan respons `200 OK` beserta pesan konfirmasi keberhasilan.
+
+* **`delete($id)`** — Menangani request `DELETE /post/{id}`. Mencari artikel berdasarkan ID, jika ada maka dihapus dari database dan mengembalikan respons `200 OK` menggunakan `$this->respondDeleted()`. Jika tidak ditemukan, mengembalikan `404 Not Found`.
+
+### 3. Konfigurasi Routing REST API
+Untuk mendaftarkan semua *endpoint* API secara otomatis, cukup menambahkan satu baris kode pada file `app/Config/Routes.php`:
+
+```php
+$routes->resource('post');
+```
+
+Satu baris ini secara otomatis menghasilkan 7 *endpoint* sekaligus yang dapat diverifikasi dengan perintah `php spark routes` di terminal. Yang terpenting, route ini ditempatkan **di luar** grup `admin` agar dapat diakses tanpa filter autentikasi, sehingga API bersifat publik dan dapat diuji langsung melalui Postman.
+
+### 4. Pengujian REST API dengan Postman
+Seluruh *endpoint* yang dibuat diuji menggunakan aplikasi Postman dengan hasil sebagai berikut:
+
+**a. Menampilkan Semua Data (GET)**
+Request `GET` ke `http://localhost:8080/post` berhasil mengembalikan seluruh data artikel dari database dalam format JSON dengan status `200 OK`.
+
+**Screenshot GET semua data:**
+![GET Semua Data](screenshot/p10_get_all.png)
+
+**b. Menampilkan Data Spesifik (GET by ID)**
+Request `GET` ke `http://localhost:8080/post/{id}` berhasil mengembalikan satu data artikel sesuai ID yang diminta dengan status `200 OK`.
+
+**Screenshot GET data spesifik:**
+![GET Data Spesifik](screenshot/p10_get_single.png)
+
+**c. Menambah Data Baru (POST)**
+Request `POST` ke `http://localhost:8080/post` dengan *body* berisi `judul` dan `isi` berhasil menyimpan data baru ke database dan mengembalikan status `201 Created` beserta pesan sukses dalam JSON.
+
+**Screenshot POST tambah data:**
+![POST Tambah Data](screenshot/p10_post_create.png)
+
+**d. Mengubah Data (PUT)**
+Request `PUT` ke `http://localhost:8080/post/{id}` dengan *body* berisi data yang diperbarui berhasil mengubah data artikel di database dan mengembalikan status `200 OK` beserta pesan konfirmasi.
+
+**Screenshot PUT ubah data:**
+![PUT Ubah Data](screenshot/p10_put_update.png)
+
+**e. Menghapus Data (DELETE)**
+Request `DELETE` ke `http://localhost:8080/post/{id}` berhasil menghapus artikel dari database dan mengembalikan status `200 OK` beserta pesan konfirmasi penghapusan.
+
+**Screenshot DELETE hapus data:**
+![DELETE Hapus Data](screenshot/p10_delete.png)
+
+### 5. Konsep HTTP Method dalam REST API
+Praktikum ini mempertegas pemahaman tentang konvensi penggunaan HTTP Method dalam arsitektur REST:
+
+| HTTP Method | Endpoint | Fungsi |
+|-------------|----------|--------|
+| GET | /post | Mengambil semua data |
+| GET | /post/{id} | Mengambil satu data |
+| POST | /post | Menambah data baru |
+| PUT | /post/{id} | Mengubah data |
+| DELETE | /post/{id} | Menghapus data |
+
+## Screenshot Hasil Praktikum 1-9
 
 ---
 
@@ -380,6 +458,8 @@ Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja seca
 
 ### Tampilan Hasil Praktikum 9
 <img src="dokumentasi_praktikum/hasil_prak9.png" width="800" alt="Halaman Prak9"/>
+
+
 
 
 
