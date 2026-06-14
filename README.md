@@ -379,31 +379,31 @@ Seluruh *endpoint* yang dibuat diuji menggunakan aplikasi Postman dengan hasil s
 Request `GET` ke `http://localhost:8080/post` berhasil mengembalikan seluruh data artikel dari database dalam format JSON dengan status `200 OK`.
 
 **Screenshot GET semua data:**
-![GET Semua Data](screenshot/p10_get_all.png)
+<img src="dokumentasi_praktikum/get_semua_data.png" width="800" alt="Halaman Output"/>
 
 **b. Menampilkan Data Spesifik (GET by ID)**
 Request `GET` ke `http://localhost:8080/post/{id}` berhasil mengembalikan satu data artikel sesuai ID yang diminta dengan status `200 OK`.
 
 **Screenshot GET data spesifik:**
-![GET Data Spesifik](screenshot/p10_get_single.png)
+<img src="dokumentasi_praktikum/get_data_spesifik.png" width="800" alt="Halaman Output"/>
 
 **c. Menambah Data Baru (POST)**
 Request `POST` ke `http://localhost:8080/post` dengan *body* berisi `judul` dan `isi` berhasil menyimpan data baru ke database dan mengembalikan status `201 Created` beserta pesan sukses dalam JSON.
 
 **Screenshot POST tambah data:**
-![POST Tambah Data](screenshot/p10_post_create.png)
+<img src="dokumentasi_praktikum/post_tambah_data.png" width="800" alt="Halaman Tambah data"/>
 
 **d. Mengubah Data (PUT)**
 Request `PUT` ke `http://localhost:8080/post/{id}` dengan *body* berisi data yang diperbarui berhasil mengubah data artikel di database dan mengembalikan status `200 OK` beserta pesan konfirmasi.
 
 **Screenshot PUT ubah data:**
-![PUT Ubah Data](screenshot/p10_put_update.png)
+<img src="dokumentasi_praktikum/put_ubah_data.png" width="800" alt="Halaman Ubah data"/>
 
 **e. Menghapus Data (DELETE)**
 Request `DELETE` ke `http://localhost:8080/post/{id}` berhasil menghapus artikel dari database dan mengembalikan status `200 OK` beserta pesan konfirmasi penghapusan.
 
 **Screenshot DELETE hapus data:**
-![DELETE Hapus Data](screenshot/p10_delete.png)
+<img src="dokumentasi_praktikum/delete_hapus_data.png" width="800" alt="Halaman Delete"/>
 
 ### 5. Konsep HTTP Method dalam REST API
 Praktikum ini mempertegas pemahaman tentang konvensi penggunaan HTTP Method dalam arsitektur REST:
