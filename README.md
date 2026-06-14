@@ -289,6 +289,66 @@ Seluruh operasi *Create, Read, Update,* dan *Delete* (CRUD) dijalankan melalui p
 **Siklus Sinkronisasi Otomatis:**
 Rahasia dari aplikasi yang berjalan mulus tanpa *reload* ini adalah siklus pemanggilannya. Setiap kali proses penambahan, pengubahan, maupun penghapusan data berhasil direspon dengan status 'OK' oleh server, JavaScript secara otomatis akan memanggil ulang fungsi `loadData()`. Akibatnya, tabel langsung memperbarui tampilannya dalam sepersekian detik menyesuaikan data terbaru di *database*.
 
+## Praktikum 9: Implementasi AJAX Pagination dan Search
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini merupakan kelanjutan dari Praktikum 8, dengan fokus pada peningkatan fitur halaman admin artikel menggunakan **AJAX Pagination** dan **AJAX Search**. Jika pada praktikum sebelumnya AJAX diterapkan untuk operasi CRUD, kini AJAX digunakan untuk memperbarui daftar artikel secara dinamis berdasarkan pencarian kata kunci, filter kategori, pengurutan data, serta perpindahan halaman — semuanya tanpa perlu *reload* halaman. Kombinasi fitur-fitur ini secara signifikan meningkatkan performa dan kenyamanan pengguna (*User Experience*) pada panel admin.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Modifikasi Controller (`Artikel.php`)
+Modifikasi dilakukan pada method `admin_index()` yang sudah ada. Perubahan utamanya adalah menambahkan kemampuan controller untuk mendeteksi jenis *request* yang masuk menggunakan `$this->request->isAJAX()`.
+
+* **Jika request biasa (bukan AJAX):** Controller tetap mengembalikan tampilan halaman HTML penuh seperti sebelumnya menggunakan fungsi `view()`, lengkap dengan data kategori untuk mengisi dropdown filter.
+* **Jika request AJAX:** Controller hanya mengembalikan data artikel dan informasi pagination dalam format **JSON** menggunakan `return $this->response->setJSON($data)`. Hal ini membuat server tidak perlu memproses dan mengirim kerangka HTML yang besar, cukup data mentah yang dibutuhkan saja.
+
+Selain itu, controller juga diperkaya dengan kemampuan membaca tiga parameter tambahan dari *request*: `$page` untuk nomor halaman aktif, `$sort` untuk parameter pengurutan, dan `$q` serta `$kategori_id` untuk filter pencarian. Pagination dikelola secara manual menggunakan `limit()` dan `offset()` pada Query Builder agar struktur data `pager` yang dikembalikan ke JSON dapat dikontrol sepenuhnya dan terbaca dengan baik oleh JavaScript.
+
+### 2. Modifikasi View (`admin_index.php`)
+Perubahan pada sisi *frontend* merupakan inti dari praktikum ini. Pola yang diterapkan sama seperti Praktikum 8: elemen kontainer HTML dikosongkan, lalu diisi secara dinamis oleh JavaScript.
+
+* **Form pencarian diubah** dari `method="get"` biasa menjadi form yang dikontrol penuh oleh jQuery. Atribut `id` ditambahkan pada setiap elemen form (`#search-form`, `#search-box`, `#category-filter`, `#sort-filter`) agar mudah diakses oleh JavaScript.
+* **Dua kontainer kosong** ditambahkan: `<div id="article-container">` untuk menampung tabel artikel dan `<div id="pagination-container">` untuk menampung tombol-tombol halaman. Keduanya akan diisi secara dinamis oleh JavaScript setelah menerima respons dari server.
+* **Loading Indicator** berupa animasi *spinner* CSS ditambahkan dan disembunyikan secara *default*. Spinner ini akan ditampilkan saat AJAX sedang memproses *request* dan disembunyikan kembali setelah data berhasil dimuat, memberikan umpan balik visual kepada pengguna bahwa sistem sedang bekerja.
+
+### 3. Implementasi Fungsi JavaScript
+Seluruh logika interaktivitas dikendalikan oleh beberapa fungsi JavaScript utama di dalam blok `$(document).ready()`:
+
+* **`buildUrl(page)`:** Fungsi pembantu yang bertugas merangkai URL *request* secara dinamis. Fungsi ini mengambil nilai terkini dari semua input (kata kunci, kategori, sorting, nomor halaman) lalu menggabungkannya menjadi satu string URL yang lengkap beserta *query parameter*-nya.
+
+* **`fetchData(url)`:** Fungsi inti yang menjalankan perintah `$.ajax()` dengan metode GET ke URL yang diberikan. Header `X-Requested-With: XMLHttpRequest` disertakan agar server dapat mengenalinya sebagai *request* AJAX melalui `isAJAX()`. Saat *request* berhasil, fungsi ini memanggil `renderArticles()` dan `renderPagination()`. Saat gagal, pesan error akan ditampilkan.
+
+* **`renderArticles(articles)`:** Fungsi yang menerima array data artikel dari JSON, lalu melakukan perulangan untuk membangun string HTML berupa tabel lengkap dengan kolom ID, Judul, Gambar, Kategori, Status, dan tombol Aksi. String HTML yang sudah jadi kemudian disuntikkan ke dalam `#article-container`.
+
+* **`renderPagination(pager, q, kategori_id)`:** Fungsi yang menerima data pager dari JSON dan membangun deretan tombol halaman (Previous, nomor halaman, Next) secara dinamis. Setiap tombol halaman memiliki URL yang sudah menyertakan semua parameter aktif (kata kunci, kategori, sorting) agar filter tidak hilang saat berpindah halaman.
+
+### 4. Fitur Sorting (Pengurutan Data)
+Sebagai fitur tambahan, dropdown **Urutkan** ditambahkan pada form pencarian dengan empat pilihan: Judul A-Z, Judul Z-A, Terbaru, dan Terlama. Pada sisi controller, nilai parameter `$sort` dibaca dan diproses menggunakan blok `switch-case` yang menentukan kolom dan arah pengurutan (`orderBy`) sebelum query dijalankan. Perubahan pada dropdown ini secara otomatis memicu `fetchData()` tanpa perlu menekan tombol Cari, sehingga hasil pengurutan langsung terlihat secara instan.
+
+### 5. Sinkronisasi Antar Fitur
+Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja secara bersamaan dan saling menjaga parameter satu sama lain:
+
+* Saat **pencarian** dijalankan, nomor halaman direset ke 1 agar hasil selalu dimulai dari awal.
+* Saat **berpindah halaman**, nilai pencarian, filter kategori, dan sorting tetap dipertahankan dalam URL sehingga konteks pencarian tidak hilang.
+* Saat **dropdown kategori atau sorting diubah**, `fetchData()` terpanggil otomatis tanpa perlu klik tombol Cari, memberikan respons yang lebih cepat dan intuitif bagi pengguna.
+
+### Screenshot Hasil Praktikum
+
+**Tampilan Awal Daftar Artikel (Admin)**
+![Tampilan Awal](screenshot/p9_tampilan_awal.png)
+
+**Fitur Search & Filter Kategori**
+![Search dan Filter](screenshot/p9_search_filter.png)
+
+**Fitur Sorting Judul A-Z**
+![Sorting](screenshot/p9_sorting.png)
+
+**Pagination Berfungsi**
+![Pagination](screenshot/p9_pagination.png)
+
+**Response JSON di Network Tab**
+![Network JSON](screenshot/p9_network_json.png)
+
 
 ## Screenshot Hasil Praktikum
 
