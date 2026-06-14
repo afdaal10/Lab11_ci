@@ -355,7 +355,7 @@ Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja seca
 ---
 
 **Layout Sederhana dengan CSS**
-![Screenshot edit](dokumentasi_praktikum/halaman_about.png)
+<img src="dokumentasi_praktikum/halaman_about.png" width="800" alt="Halaman About"/>
 
 
 **Tampilan Daftar Artikel (Publik)**
