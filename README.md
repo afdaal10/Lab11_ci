@@ -332,64 +332,48 @@ Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja seca
 * Saat **berpindah halaman**, nilai pencarian, filter kategori, dan sorting tetap dipertahankan dalam URL sehingga konteks pencarian tidak hilang.
 * Saat **dropdown kategori atau sorting diubah**, `fetchData()` terpanggil otomatis tanpa perlu klik tombol Cari, memberikan respons yang lebih cepat dan intuitif bagi pengguna.
 
-### Screenshot Hasil Praktikum
-
-**Tampilan Awal Daftar Artikel (Admin)**
-![Tampilan Awal](screenshot/p9_tampilan_awal.png)
-
-**Fitur Search & Filter Kategori**
-![Search dan Filter](screenshot/p9_search_filter.png)
-
-**Fitur Sorting Judul A-Z**
-![Sorting](screenshot/p9_sorting.png)
-
-**Pagination Berfungsi**
-![Pagination](screenshot/p9_pagination.png)
-
-**Response JSON di Network Tab**
-![Network JSON](screenshot/p9_network_json.png)
-
-
 ## Screenshot Hasil Praktikum
 
 ---
 
-**Layout Sederhana dengan CSS**
+### Layout Sederhana dengan CSS
 <img src="dokumentasi_praktikum/halaman_about.png" width="800" alt="Halaman About"/>
 
+### Tampilan Daftar Artikel (Publik)
+<img src="dokumentasi_praktikum/daftar_artikel.png" width="800" alt="Halaman Daftar Artikel"/>
 
-**Tampilan Daftar Artikel (Publik)**
-![Screenshot edit](dokumentasi_praktikum/daftar_artikel.png)
+### Tampilan Detail Artikel
+<img src="dokumentasi_praktikum/detail_artikel.png" width="800" alt="Halaman Detail"/>
 
-**Tampilan Detail Artikel**
-![Screenshot edit](dokumentasi_praktikum/detail_artikel.png)
+### Halaman Admin - Daftar Artikel
+<img src="dokumentasi_praktikum/admin_daftar_artikel.png" width="800" alt="Halaman Admin"/>
 
-**Halaman Admin - Daftar Artikel**
-![Screenshot edit](dokumentasi_praktikum/admin_daftar_artikel.png)
+### Halaman Admin - Tambah Artikel
+<img src="dokumentasi_praktikum/tambah_artikel1.png" width="800" alt="Halaman Tambah"/>
 
-**Halaman Admin - Tambah Artikel**
-![Screenshot edit](dokumentasi_praktikum/tambah_artikel1.png)
+### Halaman Admin - Edit Artikel**
+<img src="dokumentasi_praktikum/edit_artikel.png" width="800" alt="Halaman Edit"/>
 
-**Halaman Admin - Edit Artikel**
-![Screenshot edit](dokumentasi_praktikum/edit_artikel.png)
+### Halaman Login
+<img src="dokumentasi_praktikum/halaman_login.png" width="800" alt="Halaman Login"/>
 
-**Halaman Login**
-![Screenshot edit](dokumentasi_praktikum/halaman_login.png)
+### Halaman Fitur Pencarian
+<img src="dokumentasi_praktikum/fitur_pencarian.png" width="800" alt="Halaman Pencarian"/>
 
-**Halaman Fitur Pencarian**
-![Screenshot edit](dokumentasi_praktikum/fitur_pencarian.png)
+### Halaman Fitur Pagination
+<img src="dokumentasi_praktikum/pagination.png" width="800" alt="Halaman Pagination"/>
 
-**Halaman Fitur Pagination**
-![Screenshot edit](dokumentasi_praktikum/pagination.png)
+### Halaman Kategori
+<img src="dokumentasi_praktikum/kategori.png" width="800" alt="Halaman Kategori"/>
 
-**Halaman Kategori**
-![Screenshot edit](dokumentasi_praktikum/kategori.png)
+### Halaman Upload Gambar
+<img src="dokumentasi_praktikum/upload_gambar.png" width="800" alt="Halaman Apload"/>
 
-**Halaman Upload Gambar**
-![Screenshot edit](dokumentasi_praktikum/upload_gambar.png)
+### Halaman Daftar Artikel New
+<img src="dokumentasi_praktikum/output_praktikum.png" width="800" alt="Halaman Output"/>
 
-**Halaman Daftar Artikel New**
-![Screenshot edit](dokumentasi_praktikum/output_praktikum.png)
+### Tampilan Hasil Praktikum 9
+<img src="dokumentasi_praktikum/hasil_prak9.png" width="800" alt="Halaman Prak9"/>
 
 
 
