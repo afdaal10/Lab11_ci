@@ -1,8 +1,14 @@
 # Lab7Web - Praktikum Pemrograman Web 2
 ## Framework CodeIgniter 4
-**Nama:** Afdhal Agislam  
-**NIM:** 312410445  
-**Kelas:** I241E 
+
+## 👤 Identitas Mahasiswa
+ 
+| | |
+|---|---|
+| Nama | Afdhal Agislam |
+| NIM | 312410445 |
+| Kelas | I241E |
+| Mata Kuliah | Pemrograman Web 2 |
 
 ### Universitas Pelita Bangsa
 
