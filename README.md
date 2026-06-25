@@ -469,7 +469,7 @@ Antarmuka dibangun menggunakan HTML murni dengan direktif Vue yang disematkan la
 ### Screenshot Hasil Praktikum
 
 **Tampilan Awal Daftar Artikel**
-<img src="dokumentasi_praktikum/output_prak11.png" width="800" alt="Halaman artikel"/>
+<img src="dokumentasi_praktikum/output_prak11.png" width="700" alt="Halaman artikel"/>
 
 
 ## Screenshot Hasil Praktikum 1-9
