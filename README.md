@@ -512,16 +512,19 @@ Sebagai tugas tambahan, dibuat komponen `About.js` baru dengan route `/about` da
 ### Screenshot Hasil Praktikum
 
 **Halaman Beranda**
+
 <img src="dokumentasi_praktikum/output_prak12.png" width="700" alt="Halaman beranda"/>
 
 **Halaman Kelola Artikel**
+
 <img src="dokumentasi_praktikum/output1_prak12.png" width="700" alt="Halaman Artikel"/>
 
 **Halaman About**
+
 <img src="dokumentasi_praktikum/output2_prak12.png" width="700" alt="Halaman About"/>
 
 
-## Screenshot Hasil Praktikum 1-9
+# Screenshot Hasil Praktikum 1-9
 
 ---
 
