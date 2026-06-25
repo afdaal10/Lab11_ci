@@ -471,6 +471,55 @@ Antarmuka dibangun menggunakan HTML murni dengan direktif Vue yang disematkan la
 **Output**
 <img src="dokumentasi_praktikum/output_prak11.png" width="700" alt="Halaman artikel"/>
 
+## Praktikum 12: VueJS Komponen dan Routing (Single Page Application)
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini merupakan peningkatan dari Praktikum 11, dengan fokus pada penerapan dua konsep fundamental VueJS modern: **Vue Components** dan **Vue Router**. Pada praktikum sebelumnya, seluruh logika aplikasi ditulis dalam satu file `app.js` dan satu file `index.html`. Pendekatan ini tidak skalabel untuk aplikasi yang lebih besar. Dengan memecah aplikasi menjadi komponen-komponen terisolasi dan menambahkan sistem routing di sisi klien, aplikasi berevolusi menjadi sebuah **Single Page Application (SPA)** yang sesungguhnya — aplikasi web yang dapat berpindah antar halaman tanpa melakukan *reload* ke server sama sekali.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Penambahan Library Vue Router
+Library **Vue Router 4** ditambahkan melalui CDN pada file `index.html`. Vue Router adalah library resmi VueJS yang menangani navigasi di sisi klien. Berbeda dengan navigasi web tradisional yang meminta halaman baru dari server setiap kali tautan diklik, Vue Router mencegat klik tersebut dan hanya mengganti komponen yang ditampilkan di dalam halaman, tanpa *reload*. Hasilnya adalah perpindahan antar halaman yang sangat cepat dan mulus.
+
+### 2. Pemecahan Kode Menjadi Komponen
+Struktur project diperluas dengan menambahkan folder `assets/js/components/` yang berisi tiga file komponen terpisah:
+
+* **`Home.js`** — Komponen halaman beranda yang menampilkan pesan selamat datang dan daftar fitur aplikasi. Komponen ini bersifat statis dan tidak memerlukan koneksi ke API.
+
+* **`Artikel.js`** — Komponen yang memuat seluruh logika CRUD artikel yang sebelumnya ada di `app.js`. Dengan dipindah ke file tersendiri, komponen ini menjadi unit yang terisolasi dan dapat digunakan kembali (*reusable*). Komponen ini memiliki `data()`, `mounted()`, dan `methods()` sendiri yang lengkap untuk mengelola state dan interaksi dengan REST API.
+
+* **`About.js`** — Komponen baru yang dibuat sebagai tugas tambahan, menampilkan halaman profil pembuat aplikasi lengkap dengan nama, NIM, kelas, program studi, dan universitas dalam tampilan yang rapi.
+
+### 3. Konfigurasi Vue Router di `app.js`
+File `app.js` diubah total fungsinya — dari tempat logika aplikasi menjadi tempat konfigurasi dan inisialisasi aplikasi. Di sini didefinisikan tabel routing yang memetakan setiap URL ke komponen yang sesuai:
+
+* `'/'` → komponen `Home`
+* `'/artikel'` → komponen `Artikel`
+* `'/about'` → komponen `About`
+
+Router dibuat menggunakan `createWebHashHistory()` yang memanfaatkan karakter `#` pada URL (contoh: `localhost/lab8_vuejs/#/artikel`). Mode hash dipilih karena tidak memerlukan konfigurasi server tambahan dan bekerja langsung di lingkungan XAMPP.
+
+### 4. Modifikasi Layout Utama (`index.html`)
+File `index.html` diubah menjadi *master layout* yang hanya berisi kerangka tetap aplikasi. Dua elemen kunci Vue Router ditambahkan:
+
+* **`<router-link>`** — Pengganti tag `<a>` biasa untuk navigasi antar halaman. Vue Router secara otomatis menambahkan class `router-link-exact-active` pada tautan yang sedang aktif, sehingga menu yang dipilih dapat diberi gaya CSS berbeda (warna biru aktif).
+
+* **`<router-view>`** — Elemen penampung dinamis yang akan digantikan oleh komponen sesuai route yang aktif. Inilah inti dari SPA — hanya bagian ini yang berubah saat navigasi, bukan seluruh halaman.
+
+### 5. Tambahan Halaman About (Tugas)
+Sebagai tugas tambahan, dibuat komponen `About.js` baru dengan route `/about` dan tautan navigasi di menu atas. Halaman ini menampilkan identitas pembuat aplikasi: **Afdhal Agislam**, NIM **312410445**, Kelas **I241E**, Program Studi Teknik Informatika, Universitas Pelita Bangsa.
+
+### Screenshot Hasil Praktikum
+
+**Halaman Beranda**
+<img src="dokumentasi_praktikum/output_prak12.png" width="700" alt="Halaman beranda"/>
+
+**Halaman Kelola Artikel**
+<img src="dokumentasi_praktikum/output1_prak12.png" width="700" alt="Halaman Artikel"/>
+
+**Halaman About**
+<img src="dokumentasi_praktikum/output2_prak12.png" width="700" alt="Halaman About"/>
+
 
 ## Screenshot Hasil Praktikum 1-9
 
