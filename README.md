@@ -415,6 +415,63 @@ Praktikum ini mempertegas pemahaman tentang konvensi penggunaan HTTP Method dala
 | PUT | /post/{id} | Mengubah data |
 | DELETE | /post/{id} | Menghapus data |
 
+## Praktikum 11: Implementasi Frontend dengan VueJS 3
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini merupakan kelanjutan dari Praktikum 10, dengan fokus pada pembuatan **Frontend** menggunakan framework JavaScript modern, yaitu **VueJS 3**. Jika pada Praktikum 10 kita membangun *backend* berupa REST API menggunakan CodeIgniter 4, maka pada praktikum ini kita membangun sisi *client* (antarmuka pengguna) yang mengonsumsi API tersebut. Konsep ini dikenal sebagai arsitektur **Decoupled** atau pemisahan *frontend* dan *backend*, di mana keduanya berkomunikasi secara eksklusif melalui pertukaran data JSON. Hasilnya adalah aplikasi web yang lebih modern, responsif, dan mudah dikembangkan secara terpisah oleh tim yang berbeda.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Persiapan Project dan Struktur Direktori
+Project VueJS dibuat secara manual (tanpa npm/build tools) dengan memanfaatkan **CDN** (*Content Delivery Network*). Dua library utama dimuat langsung dari CDN:
+
+* **VueJS 3** (`vue.global.js`) — Framework JavaScript utama untuk membangun antarmuka yang reaktif.
+* **Axios** (`axios.min.js`) — Library HTTP client untuk melakukan request ke REST API dengan sintaks yang lebih sederhana dibanding `fetch` bawaan browser.
+
+Struktur folder project dibuat di dalam direktori `htdocs` dengan nama `lab8_vuejs`, berisi satu file `index.html` sebagai halaman utama, serta folder `assets` yang di dalamnya terdapat `css/style.css` untuk tampilan dan `js/app.js` untuk seluruh logika aplikasi.
+
+### 2. Konfigurasi CORS pada Backend CI4
+Sebelum frontend dapat berkomunikasi dengan API, diperlukan konfigurasi **CORS** (*Cross-Origin Resource Sharing*) pada sisi backend CI4. CORS adalah mekanisme keamanan browser yang memblokir request dari *origin* berbeda (misalnya `localhost` ke `localhost:8080`). Untuk mengatasinya, dibuat filter baru bernama `Cors.php` di direktori `app/Filters/` yang menambahkan header `Access-Control-Allow-Origin: *` pada setiap response. Filter ini kemudian didaftarkan di `app/Config/Filters.php` dan diterapkan pada route `post` di `app/Config/Routes.php`, termasuk menangani *preflight* request dengan method OPTIONS.
+
+### 3. Struktur Aplikasi VueJS (`app.js`)
+Seluruh logika aplikasi dibangun menggunakan **Vue Instance** yang di-*mount* ke elemen `#app` di HTML. Instance ini memiliki tiga bagian utama:
+
+* **`data()`** — Menyimpan state aplikasi secara reaktif, meliputi: array `artikel` untuk menampung data dari API, objek `formData` untuk menampung input form (id, judul, isi, status), boolean `showForm` untuk mengontrol visibilitas modal form, string `formTitle` untuk judul form dinamis, dan array `statusOptions` untuk pilihan dropdown status.
+
+* **`mounted()`** — Hook siklus hidup Vue yang dipanggil otomatis saat komponen pertama kali dimuat. Di sini fungsi `loadData()` dipanggil untuk langsung mengambil data dari API saat halaman dibuka.
+
+* **`methods()`** — Kumpulan fungsi yang menangani seluruh interaksi pengguna, dijelaskan pada poin berikutnya.
+
+### 4. Implementasi Operasi CRUD via REST API
+
+Seluruh operasi data dilakukan tanpa perpindahan halaman menggunakan Axios:
+
+* **`loadData()`** — Mengirim request `GET` ke endpoint `/post` dan menyimpan array artikel yang diterima ke dalam `data.artikel`. VueJS secara otomatis memperbarui tampilan tabel karena data bersifat reaktif.
+
+* **`tambah()`** — Menampilkan modal form dalam kondisi kosong dengan judul "Tambah Data", siap untuk menerima input artikel baru.
+
+* **`edit(data)`** — Menerima objek artikel yang diklik, lalu mengisi `formData` dengan data tersebut dan menampilkan modal form dengan judul "Ubah Data". Pengguna dapat langsung melihat data lama dan mengubahnya.
+
+* **`saveData()`** — Fungsi tunggal yang menangani penyimpanan untuk dua kondisi sekaligus. Jika `formData.id` terisi (mode edit), maka dikirim request `PUT` ke `/post/{id}`. Jika `formData.id` kosong (mode tambah), maka dikirim request `POST` ke `/post`. Setelah berhasil, form direset dan `loadData()` dipanggil ulang untuk memperbarui tabel.
+
+* **`hapus(index, id)`** — Menampilkan dialog konfirmasi browser. Jika dikonfirmasi, request `DELETE` dikirim ke `/post/{id}`. Data dihapus dari array lokal menggunakan `splice()` tanpa perlu memanggil ulang API, sehingga lebih efisien.
+
+* **`statusText(status)`** — Fungsi pembantu yang mengkonversi nilai status dari angka (0/1) menjadi teks yang mudah dibaca ("Draft"/"Publish") untuk ditampilkan di tabel.
+
+### 5. Tampilan Antarmuka (index.html & style.css)
+Antarmuka dibangun menggunakan HTML murni dengan direktif Vue yang disematkan langsung:
+
+* **`v-for`** — Digunakan untuk melakukan perulangan dan merender setiap baris tabel secara otomatis dari array `artikel`.
+* **`v-if`** — Digunakan untuk menampilkan/menyembunyikan modal form berdasarkan nilai `showForm`.
+* **`v-model`** — Menghubungkan elemen input form dengan `formData` secara dua arah (*two-way binding*), sehingga perubahan input langsung tercermin di data Vue.
+* **`@click`** dan **`@submit.prevent`** — Menangani event klik dan submit form tanpa menyebabkan *reload* halaman.
+
+### Screenshot Hasil Praktikum
+
+**Tampilan Awal Daftar Artikel**
+<img src="dokumentasi_praktikum/output_prak11.png" width="800" alt="Halaman artikel"/>
+
+
 ## Screenshot Hasil Praktikum 1-9
 
 ---
