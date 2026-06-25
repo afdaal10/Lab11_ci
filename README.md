@@ -75,7 +75,7 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
 
-## Praktikum 1: PHP Framework (CodeIgniter)
+# Praktikum 1: PHP Framework (CodeIgniter)
 
 ### Tujuan
 Memahami konsep dasar Framework, konsep MVC, dan membuat program sederhana menggunakan CodeIgniter 4.
@@ -103,7 +103,7 @@ File CSS disimpan di direktori public dengan nama style.css. Template layout dib
 
 ---
 
-## Praktikum 2: Framework Lanjutan (CRUD)
+# Praktikum 2: Framework Lanjutan (CRUD)
 
 ### Tujuan
 Memahami konsep dasar Model, konsep CRUD, dan membuat aplikasi CRUD sederhana menggunakan CodeIgniter 4.
@@ -134,7 +134,7 @@ Routing dibagi menjadi dua kelompok yaitu route publik untuk halaman yang dapat 
 
 ---
 
-## Praktikum 3: View Layout dan View Cell
+# Praktikum 3: View Layout dan View Cell
 
 ### Tujuan
 Memahami konsep View Layout dan View Cell di CodeIgniter 4 serta mengimplementasikannya untuk membuat tampilan yang modular dan dapat digunakan ulang.
@@ -160,7 +160,7 @@ View biasa hanya dapat menampilkan data yang secara eksplisit dikirimkan dari Co
 
 ---
 
-## Praktikum 4: Framework Lanjutan (Modul Login)
+# Praktikum 4: Framework Lanjutan (Modul Login)
 
 ### Tujuan
 Memahami konsep Auth dan Filter, konsep Login System, dan membuat modul login menggunakan CodeIgniter 4.
@@ -194,7 +194,7 @@ Tombol Logout ditambahkan di navigasi halaman admin. Ketika diklik, sesi akan di
 
 ---
 
-## Praktikum 5: Pagination dan Pencarian
+# Praktikum 5: Pagination dan Pencarian
 
 ### Tujuan
 Memahami konsep dasar Pagination dan Pencarian data, serta mengimplementasikannya menggunakan Framework CodeIgniter 4.
@@ -214,7 +214,7 @@ Form pencarian ditambahkan di bagian atas tabel admin dengan method GET sehingga
 
 ---
 
-## Praktikum 6: Relasi Tabel dan Query Builder
+# Praktikum 6: Relasi Tabel dan Query Builder
 
 ### Tujuan
 Memahami konsep relasi antar tabel dalam database, mengimplementasikan relasi One-to-Many, melakukan query join tabel menggunakan Query Builder, dan menampilkan data dari tabel yang berelasi.
@@ -239,7 +239,7 @@ Controller Artikel diperbarui untuk menggunakan KategoriModel dan menampilkan da
 
 ---
 
-## Praktikum 7: Upload File Gambar
+# Praktikum 7: Upload File Gambar
 
 ### Tujuan
 Memahami konsep dasar File Upload dan mengimplementasikan fitur upload gambar pada artikel menggunakan Framework CodeIgniter 4.
@@ -264,7 +264,7 @@ Gambar ditampilkan di halaman daftar artikel publik dan halaman detail artikel m
 
 ---
 
-## Praktikum 8: Implementasi AJAX pada CodeIgniter 4
+# Praktikum 8: Implementasi AJAX pada CodeIgniter 4
 
 **Konsep dan Tujuan Utama:**
 Praktikum ini bertujuan untuk merombak cara aplikasi berinteraksi dengan server menggunakan teknologi **AJAX** (*Asynchronous JavaScript and XML*). Pada praktikum sebelumnya, setiap operasi (Tambah, Ubah, Hapus) mengharuskan browser untuk memuat ulang (*reload*) seluruh halaman secara penuh. Dengan menerapkan AJAX, aplikasi dapat mengirim dan menerima data dari server di latar belakang. Hasilnya, antarmuka web—seperti tabel daftar artikel—dapat diperbarui secara seketika (*real-time*) tanpa perlu *loading* halaman. Hal ini membuat aplikasi terasa jauh lebih cepat, dinamis, dan meningkatkan *User Experience* (UX) secara signifikan.
@@ -294,7 +294,7 @@ Seluruh operasi *Create, Read, Update,* dan *Delete* (CRUD) dijalankan melalui p
 **Siklus Sinkronisasi Otomatis:**
 Rahasia dari aplikasi yang berjalan mulus tanpa *reload* ini adalah siklus pemanggilannya. Setiap kali proses penambahan, pengubahan, maupun penghapusan data berhasil direspon dengan status 'OK' oleh server, JavaScript secara otomatis akan memanggil ulang fungsi `loadData()`. Akibatnya, tabel langsung memperbarui tampilannya dalam sepersekian detik menyesuaikan data terbaru di *database*.
 
-## Praktikum 9: Implementasi AJAX Pagination dan Search
+# Praktikum 9: Implementasi AJAX Pagination dan Search
 
 **Konsep dan Tujuan Utama:**
 Praktikum ini merupakan kelanjutan dari Praktikum 8, dengan fokus pada peningkatan fitur halaman admin artikel menggunakan **AJAX Pagination** dan **AJAX Search**. Jika pada praktikum sebelumnya AJAX diterapkan untuk operasi CRUD, kini AJAX digunakan untuk memperbarui daftar artikel secara dinamis berdasarkan pencarian kata kunci, filter kategori, pengurutan data, serta perpindahan halaman — semuanya tanpa perlu *reload* halaman. Kombinasi fitur-fitur ini secara signifikan meningkatkan performa dan kenyamanan pengguna (*User Experience*) pada panel admin.
@@ -337,7 +337,7 @@ Seluruh fitur (search, filter, sorting, pagination) dirancang untuk bekerja seca
 * Saat **berpindah halaman**, nilai pencarian, filter kategori, dan sorting tetap dipertahankan dalam URL sehingga konteks pencarian tidak hilang.
 * Saat **dropdown kategori atau sorting diubah**, `fetchData()` terpanggil otomatis tanpa perlu klik tombol Cari, memberikan respons yang lebih cepat dan intuitif bagi pengguna.
 
-## Praktikum 10: Implementasi REST API dengan CodeIgniter 4
+# Praktikum 10: Implementasi REST API dengan CodeIgniter 4
 
 **Konsep dan Tujuan Utama:**
 Praktikum ini memperkenalkan konsep **REST API** (*Representational State Transfer Application Programming Interface*) menggunakan Framework CodeIgniter 4. Berbeda dengan praktikum sebelumnya yang membangun antarmuka berbasis HTML untuk pengguna manusia, REST API dirancang sebagai jembatan komunikasi antar aplikasi (*machine-to-machine*). API yang dibangun pada praktikum ini memungkinkan aplikasi lain — baik berbasis web, mobile, maupun desktop — untuk mengakses, menambah, mengubah, dan menghapus data artikel melalui protokol HTTP standar, tanpa perlu mengakses antarmuka web sama sekali. Data yang dipertukarkan menggunakan format **JSON** sebagai bahasa universal yang dapat dibaca oleh berbagai platform dan bahasa pemrograman.
@@ -415,7 +415,7 @@ Praktikum ini mempertegas pemahaman tentang konvensi penggunaan HTTP Method dala
 | PUT | /post/{id} | Mengubah data |
 | DELETE | /post/{id} | Menghapus data |
 
-## Praktikum 11: Implementasi Frontend dengan VueJS 3
+# Praktikum 11: Implementasi Frontend dengan VueJS 3
 
 **Konsep dan Tujuan Utama:**
 Praktikum ini merupakan kelanjutan dari Praktikum 10, dengan fokus pada pembuatan **Frontend** menggunakan framework JavaScript modern, yaitu **VueJS 3**. Jika pada Praktikum 10 kita membangun *backend* berupa REST API menggunakan CodeIgniter 4, maka pada praktikum ini kita membangun sisi *client* (antarmuka pengguna) yang mengonsumsi API tersebut. Konsep ini dikenal sebagai arsitektur **Decoupled** atau pemisahan *frontend* dan *backend*, di mana keduanya berkomunikasi secara eksklusif melalui pertukaran data JSON. Hasilnya adalah aplikasi web yang lebih modern, responsif, dan mudah dikembangkan secara terpisah oleh tim yang berbeda.
@@ -471,7 +471,7 @@ Antarmuka dibangun menggunakan HTML murni dengan direktif Vue yang disematkan la
 **Output**
 <img src="dokumentasi_praktikum/output_prak11.png" width="700" alt="Halaman artikel"/>
 
-## Praktikum 12: VueJS Komponen dan Routing (Single Page Application)
+# Praktikum 12: VueJS Komponen dan Routing (Single Page Application)
 
 **Konsep dan Tujuan Utama:**
 Praktikum ini merupakan peningkatan dari Praktikum 11, dengan fokus pada penerapan dua konsep fundamental VueJS modern: **Vue Components** dan **Vue Router**. Pada praktikum sebelumnya, seluruh logika aplikasi ditulis dalam satu file `app.js` dan satu file `index.html`. Pendekatan ini tidak skalabel untuk aplikasi yang lebih besar. Dengan memecah aplikasi menjadi komponen-komponen terisolasi dan menambahkan sistem routing di sisi klien, aplikasi berevolusi menjadi sebuah **Single Page Application (SPA)** yang sesungguhnya — aplikasi web yang dapat berpindah antar halaman tanpa melakukan *reload* ke server sama sekali.
