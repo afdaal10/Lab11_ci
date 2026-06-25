@@ -576,20 +576,14 @@ Fungsi `logout()` pada root instance menghapus semua data dari localStorage (`is
 **Skenario A — Akses Ditolak (Belum Login):**
 Saat pengguna mencoba mengakses menu Kelola Artikel dalam kondisi belum login (localStorage kosong), Navigation Guard langsung mencegat perpindahan rute, menampilkan alert "Akses Ditolak! Anda harus login terlebih dahulu.", dan secara otomatis mengarahkan browser ke halaman form Login.
 
-**Screenshot Skenario A:**
-![Akses Ditolak](screenshot/p13_akses_ditolak.png)
+### Screenshot Skenario A:
+<img src="dokumentasi_praktikum/output_prak13.png" width="700" alt="Halaman Skenario A"/>
 
 **Skenario B — Login Berhasil:**
 Setelah mengisi form login dengan kredensial yang valid (username: admin, password: admin123) dan menekan tombol Masuk Aplikasi, sistem memvalidasi kredensial ke backend melalui Axios. Token diterima, disimpan di localStorage, dan pengguna diarahkan ke halaman Kelola Artikel. Menu navigasi berubah menampilkan nama pengguna dan tombol Logout.
 
-**Screenshot Form Login:**
-![Form Login](screenshot/p13_form_login.png)
-
-**Screenshot Setelah Login Berhasil:**
-![Login Berhasil](screenshot/p13_login_berhasil.png)
-
-**Screenshot Setelah Logout:**
-![Logout](screenshot/p13_logout.png)
+### Screenshot Form Login:
+<img src="dokumentasi_praktikum/output1_prak13.png" width="700" alt="Halaman Login"/>
 
 
 
