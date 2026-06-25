@@ -1,5 +1,4 @@
-# Lab7Web - Praktikum Pemrograman Web 2
-## Framework CodeIgniter 4
+# Praktikum 1-14 - Pemrograman Web 2
 
 ## 👤 Identitas Mahasiswa
  
