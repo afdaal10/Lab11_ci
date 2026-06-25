@@ -520,6 +520,78 @@ Sebagai tugas tambahan, dibuat komponen `About.js` baru dengan route `/about` da
 ### Halaman About
 <img src="dokumentasi_praktikum/output2_prak12.png" width="700" alt="Halaman About"/>
 
+# Praktikum 13: VueJS Autentikasi dan Navigation Guards (SPA Security)
+
+**Konsep dan Tujuan Utama:**
+Praktikum ini merupakan tahap lanjutan dari Praktikum 12, dengan fokus pada penerapan sistem **keamanan** pada aplikasi Single Page Application (SPA). Pada praktikum sebelumnya, seluruh halaman dapat diakses bebas oleh siapa saja tanpa autentikasi. Praktikum ini menambahkan dua lapisan keamanan sekaligus: **API Endpoint Login** di sisi backend CodeIgniter 4 untuk memvalidasi kredensial pengguna, dan **Navigation Guards** di sisi frontend VueJS untuk mencegah akses tidak sah ke halaman-halaman terproteksi. Kombinasi keduanya menciptakan sistem autentikasi yang lengkap pada arsitektur *decoupled* frontend-backend.
+
+Berikut adalah penjelasan dari setiap tahapan yang dilakukan selama praktikum:
+
+### 1. Pembuatan API Endpoint Login (Backend CI4)
+
+#### Auth Controller (`app/Controllers/Api/Auth.php`)
+Dibuat controller baru di dalam subfolder `Api/` yang meng-*extend* `ResourceController`. Controller ini memiliki satu method `login()` yang bekerja dengan alur berikut:
+
+* Menerima `username` dan `password` dari *request body*
+* Mencari data user di database berdasarkan kolom `username` atau `useremail` menggunakan `UserModel`
+* Memverifikasi password menggunakan dua metode sekaligus: perbandingan langsung (*plain text*) dan `password_verify()` untuk password yang sudah di-*hash*
+* Jika berhasil, mengembalikan respons JSON `200 OK` berisi data user dan sebuah **token** sederhana yang di-*encode* dengan `base64_encode()`
+* Jika gagal, mengembalikan respons `401 Unauthorized` dengan pesan error
+
+#### Konfigurasi Route dan CORS
+Route `POST api/login` didaftarkan di `Routes.php`. Filter CORS dikonfigurasi sebagai **global filter** di `Filters.php` (berlaku untuk semua route, termasuk `before` dan `after`) agar request dari origin frontend (`localhost`) tidak diblokir oleh browser saat melakukan POST ke server API (`localhost:8080`).
+
+### 2. Pembuatan Komponen Login (Frontend VueJS)
+
+#### Komponen `Login.js`
+Dibuat komponen baru `assets/js/components/Login.js` yang menampilkan form login dengan dua input: Username/Email dan Password. Saat form di-submit, fungsi `handleLogin()` dipanggil dengan alur:
+
+* Mengirim request `POST` menggunakan Axios ke endpoint `api/login` di backend CI4
+* Jika respons sukses (`status 200`), menyimpan status autentikasi ke **localStorage** browser dengan dua key: `isLoggedIn: 'true'` dan `userToken: <token>`
+* Setelah menyimpan token, mengarahkan pengguna secara programatis ke halaman `/artikel` menggunakan `this.$router.push()`
+* Jika respons gagal, menampilkan pesan error dari server di bawah form
+
+### 3. Implementasi Navigation Guards
+
+Navigation Guards diimplementasikan menggunakan fungsi `router.beforeEach()` di `app.js`. Fungsi ini bertindak sebagai *interceptor* yang dijalankan **setiap kali** pengguna berpindah halaman, sebelum komponen tujuan ditampilkan. Alur kerjanya:
+
+* Memeriksa nilai `localStorage.getItem('isLoggedIn')` — inilah penanda status autentikasi di sisi klien
+* Memeriksa apakah rute tujuan memiliki properti `meta: { requiresAuth: true }`
+* Jika rute membutuhkan autentikasi **dan** pengguna belum login → tampilkan alert "Akses Ditolak!" dan paksa redirect ke `/login`
+* Jika rute tidak membutuhkan autentikasi **atau** pengguna sudah login → izinkan akses dengan memanggil `next()`
+
+Properti `meta: { requiresAuth: true }` diterapkan pada dua rute: `/artikel` dan `/about`, sehingga kedua halaman tersebut hanya bisa diakses oleh pengguna yang sudah terautentikasi.
+
+### 4. Navigasi Dinamis Login/Logout
+
+Tampilan menu navigasi dibuat dinamis menggunakan direktif `v-if` dan `v-else` berdasarkan state `isLoggedIn` pada root Vue instance:
+
+* Jika **belum login**: menu menampilkan tautan **Login**
+* Jika **sudah login**: menu menampilkan nama pengguna dan tautan **Logout** berwarna merah
+
+Fungsi `logout()` pada root instance menghapus semua data dari localStorage (`isLoggedIn`, `userToken`, `username`), mengubah state `isLoggedIn` menjadi `false`, lalu mengarahkan pengguna kembali ke halaman Beranda.
+
+### 5. Hasil Pengujian Skenario Keamanan
+
+**Skenario A — Akses Ditolak (Belum Login):**
+Saat pengguna mencoba mengakses menu Kelola Artikel dalam kondisi belum login (localStorage kosong), Navigation Guard langsung mencegat perpindahan rute, menampilkan alert "Akses Ditolak! Anda harus login terlebih dahulu.", dan secara otomatis mengarahkan browser ke halaman form Login.
+
+**Screenshot Skenario A:**
+![Akses Ditolak](screenshot/p13_akses_ditolak.png)
+
+**Skenario B — Login Berhasil:**
+Setelah mengisi form login dengan kredensial yang valid (username: admin, password: admin123) dan menekan tombol Masuk Aplikasi, sistem memvalidasi kredensial ke backend melalui Axios. Token diterima, disimpan di localStorage, dan pengguna diarahkan ke halaman Kelola Artikel. Menu navigasi berubah menampilkan nama pengguna dan tombol Logout.
+
+**Screenshot Form Login:**
+![Form Login](screenshot/p13_form_login.png)
+
+**Screenshot Setelah Login Berhasil:**
+![Login Berhasil](screenshot/p13_login_berhasil.png)
+
+**Screenshot Setelah Logout:**
+![Logout](screenshot/p13_logout.png)
+
+
 
 # Screenshot Hasil Praktikum 1-9
 
