@@ -586,6 +586,69 @@ Setelah mengisi form login dengan kredensial yang valid (username: admin, passwo
 <img src="dokumentasi_praktikum/output1_prak13.png" width="700" alt="Halaman Login"/>
 
 
+# Praktikum 14: Axios Interceptors & API Token Authentication
+
+### Tujuan Praktikum
+
+Mahasiswa mampu menyempurnakan protokol komunikasi dengan membubuhi **Authorization Bearer Header** di setiap aktivitas HTTP secara otomatis.
+
+### Langkah-langkah Praktikum
+
+1. **Axios Request Interceptor.** Menyuntikkan token secara global ke setiap request.
+
+```js
+// assets/js/app.js - Axios Request Interceptor
+axios.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('userToken');
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+```
+
+2. **Axios Response Interceptor.** Menangkap error 401 secara global.
+
+```js
+// assets/js/app.js - Axios Response Interceptor
+axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            alert('Sesi Anda telah berakhir atau Token tidak sah. Silakan login kembali.');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userToken');
+            window.location.href = '#/login';
+        }
+        return Promise.reject(error);
+    }
+);
+```
+
+3. **Konfigurasi API URL.** Mendefinisikan endpoint backend CI4.
+
+```js
+// assets/js/app.js
+const apiUrl = 'http://localhost:8081';
+```
+
+### Pertanyaan dan Tugas
+
+> **Pertanyaan:** Kesimpulan perbedaan Navigation Guards (Vue) vs Filters (CI4).
+>
+> **Jawaban:**
+> - **Vue Router Navigation Guards (Sisi Klien):** Hanya berfokus pada UI/tampilan. Tidak dapat mencegah peretas memanipulasi database langsung melalui cURL atau Postman.
+> - **CodeIgniter Filters (Sisi Server):** Merupakan benteng pertahanan utama. Segala query masuk ditahan oleh backend jika token autentikasi tidak sah.
+>
+> **Kesimpulan:** Penggabungan kedua teknologi ini menjadikan sistem SPA lebih aman (End-to-End Security).
+
 
 # Screenshot Hasil Praktikum 1-9
 
@@ -629,6 +692,10 @@ Setelah mengisi form login dengan kredensial yang valid (username: admin, passwo
 
 ### Tampilan Hasil Praktikum 9
 <img src="dokumentasi_praktikum/hasil_prak9.png" width="800" alt="Halaman Prak9"/>
+
+
+**(c) 2026 Afdhal Agislam - Laporan Praktikum Pemrograman Web 2**  
+**Program Studi Teknik Informatika - Universitas Pelita Bangsa**
 
 
 
